@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext';
 import StatusBadge from '../components/StatusBadge';
 import CreateListingModal from './CreateListingModal';
 import InquiryChatModal from './InquiryChatModal';
+import API_BASE from '../config/api';
 import {
   Plus,
   Edit2,
@@ -54,8 +55,8 @@ export default function OwnerDashboard({ onGoToVerification }) {
       const headers = { Authorization: `Bearer ${token}` };
 
       const [listingsResponse, businessResponse] = await Promise.all([
-        fetch('/api/listings/my', { headers }),
-        fetch('/api/businesses/my-business', { headers })
+        fetch(`${API_BASE}/api/listings/my`, { headers }),
+        fetch(`${API_BASE}/api/businesses/my-business`, { headers })
       ]);
 
       const listingsPayload = await listingsResponse.json();
@@ -80,7 +81,7 @@ export default function OwnerDashboard({ onGoToVerification }) {
   const handleArchive = async (listingId) => {
     if (!confirm('Are you sure you want to archive this listing?')) return;
     try {
-      const res = await fetch(`/api/listings/${listingId}/archive`, {
+      const res = await fetch(`${API_BASE}/api/listings/${listingId}/archive`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${localStorage.getItem('mustmart_token')}` }
       });

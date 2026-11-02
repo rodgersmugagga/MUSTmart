@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import StatusBadge from '../components/StatusBadge';
+import API_BASE from '../config/api';
 import {
   Building2,
   Upload,
@@ -57,7 +58,7 @@ export default function BusinessRegistration({ onSuccess }) {
   const fetchCurrentBusiness = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/businesses/my-business', {
+      const res = await fetch(`${API_BASE}/api/businesses/my-business`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('mustmart_token')}` }
       });
       const data = await res.json();
@@ -103,7 +104,7 @@ export default function BusinessRegistration({ onSuccess }) {
       if (idFile) formData.append('id_document', idFile);
       if (ownershipFile) formData.append('ownership_document', ownershipFile);
 
-      const res = await fetch('/api/businesses/register', {
+      const res = await fetch(`${API_BASE}/api/businesses/register`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('mustmart_token')}`

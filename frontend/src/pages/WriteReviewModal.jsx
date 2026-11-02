@@ -8,6 +8,7 @@
 import React, { useState } from 'react';
 import RatingStars from '../components/RatingStars';
 import { X, AlertCircle } from 'lucide-react';
+import API_BASE from '../config/api';
 
 /**
  * Write Review Modal (Screen C5).
@@ -45,7 +46,7 @@ export default function WriteReviewModal({ listing, onClose, onSuccess }) {
 
     try {
       setSubmitting(true);
-      const res = await fetch('/api/reviews', {
+      const res = await fetch(`${API_BASE}/api/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -7,6 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import ListingCard from '../components/ListingCard';
+import API_BASE from '../config/api';
 import {
   Search,
   Sparkles,
@@ -69,8 +70,8 @@ export default function ConsumerHome({
     try {
       setLoading(true);
       const [catResponse, listResponse] = await Promise.all([
-        fetch('/api/categories'),
-        fetch('/api/listings?limit=8')
+        fetch(`${API_BASE}/api/categories`),
+        fetch(`${API_BASE}/api/listings?limit=8`)
       ]);
 
       const catPayload = await catResponse.json();

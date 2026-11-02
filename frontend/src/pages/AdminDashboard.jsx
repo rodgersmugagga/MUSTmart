@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import StatusBadge from '../components/StatusBadge';
 import RatingStars from '../components/RatingStars';
+import API_BASE from '../config/api';
 import {
   ShieldCheck,
   CheckCircle,
@@ -73,25 +74,25 @@ export default function AdminDashboard({ onSelectListing }) {
       const headers = { Authorization: `Bearer ${token}` };
 
       // Load overview statistics
-      const statsResponse = await fetch('/api/admin/stats', { headers });
+      const statsResponse = await fetch(`${API_BASE}/api/admin/stats`, { headers });
       const statsPayload = await statsResponse.json();
       if (statsPayload.success) setStats(statsPayload.stats);
 
       // Load targeted queue
       if (activeTab === 'verifications') {
-        const res = await fetch('/api/admin/verifications', { headers });
+        const res = await fetch(`${API_BASE}/api/admin/verifications`, { headers });
         const data = await res.json();
         if (data.success) setVerifications(data.verifications);
       } else if (activeTab === 'listings') {
-        const res = await fetch('/api/admin/listings', { headers });
+        const res = await fetch(`${API_BASE}/api/admin/listings`, { headers });
         const data = await res.json();
         if (data.success) setPendingListings(data.listings);
       } else if (activeTab === 'reviews') {
-        const res = await fetch('/api/admin/reviews', { headers });
+        const res = await fetch(`${API_BASE}/api/admin/reviews`, { headers });
         const data = await res.json();
         if (data.success) setFlaggedReviews(data.reviews);
       } else if (activeTab === 'log') {
-        const res = await fetch('/api/admin/moderation-log', { headers });
+        const res = await fetch(`${API_BASE}/api/admin/moderation-log`, { headers });
         const data = await res.json();
         if (data.success) setModerationLog(data.log);
       }
@@ -120,7 +121,7 @@ export default function AdminDashboard({ onSelectListing }) {
       else if (type === 'listing') endpoint = `/api/admin/listings/${id}/decision`;
       else if (type === 'review') endpoint = `/api/admin/reviews/${id}/decision`;
 
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${API_BASE}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

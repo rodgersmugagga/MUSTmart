@@ -7,6 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Building2, LandPlot, AlertCircle } from 'lucide-react';
+import API_BASE from '../config/api';
 
 /**
  * Create/Edit Listing Modal (Screen O2).
@@ -42,7 +43,7 @@ export default function CreateListingModal({ onClose, onSuccess, initialListing 
 
   // Fetch category list on mount
   useEffect(() => {
-    fetch('/api/categories')
+    fetch(`${API_BASE}/api/categories`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -104,7 +105,7 @@ export default function CreateListingModal({ onClose, onSuccess, initialListing 
         formData.append('photos', photoFiles[i]);
       }
 
-      const endpoint = initialListing ? `/api/listings/${initialListing.listing_id}` : '/api/listings';
+      const endpoint = initialListing ? `${API_BASE}/api/listings/${initialListing.listing_id}` : `${API_BASE}/api/listings`;
       const method = initialListing ? 'PUT' : 'POST';
 
       const headers = {

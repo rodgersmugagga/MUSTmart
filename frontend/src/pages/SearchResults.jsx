@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import ListingCard from '../components/ListingCard';
 import { Filter, ArrowUpDown, ShieldCheck, X } from 'lucide-react';
+import API_BASE from '../config/api';
 
 /**
  * Search results page with responsive, mobile-collapsible filters and sorting.
@@ -42,7 +43,7 @@ export default function SearchResults({
 
   // Load category definitions
   useEffect(() => {
-    fetch('/api/categories')
+    fetch(`${API_BASE}/api/categories`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) setCategories(data.categories);
@@ -80,7 +81,7 @@ export default function SearchResults({
       if (searchQuery) params.append('q', searchQuery);
       if (sort) params.append('sort', sort);
 
-      const response = await fetch(`/api/listings?${params.toString()}`);
+      const response = await fetch(`${API_BASE}/api/listings?${params.toString()}`);
       const payload = await response.json();
       if (payload.success) {
         setListings(payload.listings);

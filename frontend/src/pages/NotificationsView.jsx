@@ -7,6 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import API_BASE from '../config/api';
 import {
   Bell,
   MessageSquare,
@@ -43,7 +44,7 @@ export default function NotificationsView({ onClose, onSelectInquiry }) {
   const fetchUserNotifications = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/notifications', {
+      const res = await fetch(`${API_BASE}/api/notifications`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('mustmart_token')}` }
       });
       const data = await res.json();
@@ -66,7 +67,7 @@ export default function NotificationsView({ onClose, onSelectInquiry }) {
    */
   const handleMarkRead = async (notifId) => {
     try {
-      await fetch(`/api/notifications/${notifId}/read`, {
+      await fetch(`${API_BASE}/api/notifications/${notifId}/read`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${localStorage.getItem('mustmart_token')}` }
       });
@@ -85,7 +86,7 @@ export default function NotificationsView({ onClose, onSelectInquiry }) {
    */
   const handleMarkAllRead = async () => {
     try {
-      await fetch('/api/notifications/read-all', {
+      await fetch(`${API_BASE}/api/notifications/read-all`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${localStorage.getItem('mustmart_token')}` }
       });

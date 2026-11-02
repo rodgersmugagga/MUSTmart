@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import RatingStars from '../components/RatingStars';
 import StatusBadge from '../components/StatusBadge';
+import API_BASE from '../config/api';
 import {
   X,
   ShieldCheck,
@@ -62,7 +63,7 @@ export default function ListingDetailModal({
   const fetchListingDetails = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/listings/${listingId}`);
+      const res = await fetch(`${API_BASE}/api/listings/${listingId}`);
       const data = await res.json();
       if (data.success) {
         setListing(data.listing);
@@ -87,7 +88,7 @@ export default function ListingDetailModal({
     }
 
     try {
-      const res = await fetch(`/api/reviews/${reviewId}/flag`, {
+      const res = await fetch(`${API_BASE}/api/reviews/${reviewId}/flag`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

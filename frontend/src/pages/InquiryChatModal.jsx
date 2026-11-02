@@ -8,6 +8,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Send, AlertTriangle, ShieldCheck, ArrowLeft, MessageSquare } from 'lucide-react';
+import API_BASE from '../config/api';
 
 /**
  * Inquiry Chat Component (Screen C4).
@@ -79,7 +80,7 @@ export default function InquiryChatModal({
   const startListingInquiry = async (listingId) => {
     try {
       setLoading(true);
-      const res = await fetch('/api/conversations/start', {
+      const res = await fetch(`${API_BASE}/api/conversations/start`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +109,7 @@ export default function InquiryChatModal({
    */
   const loadConversations = async () => {
     try {
-      const res = await fetch('/api/conversations', {
+      const res = await fetch(`${API_BASE}/api/conversations`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('mustmart_token')}` }
       });
       const data = await res.json();
@@ -136,7 +137,7 @@ export default function InquiryChatModal({
   const fetchMessages = async (convId, silent = false) => {
     try {
       if (!silent) setLoading(true);
-      const res = await fetch(`/api/conversations/${convId}`, {
+      const res = await fetch(`${API_BASE}/api/conversations/${convId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('mustmart_token')}` }
       });
       const data = await res.json();
@@ -167,7 +168,7 @@ export default function InquiryChatModal({
       const outgoing = newMessage;
       setNewMessage('');
 
-      const res = await fetch(`/api/conversations/${currentConvId}/messages`, {
+      const res = await fetch(`${API_BASE}/api/conversations/${currentConvId}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

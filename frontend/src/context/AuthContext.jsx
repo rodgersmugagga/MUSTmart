@@ -6,6 +6,7 @@
  */
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import API_BASE from '../config/api';
 
 /**
  * React Context instance for application-wide authentication state.
@@ -36,7 +37,7 @@ export function AuthProvider({ children }) {
       fetchUserProfile(token);
     } else {
       // Auto-assign Dembe Brandon (Student Consumer) by default for evaluator preview
-      fetch('/api/auth/demo-users')
+      fetch(`${API_BASE}/api/auth/demo-users`)
         .then((res) => res.json())
         .then((data) => {
           if (data.success && data.users.length > 0) {
@@ -61,7 +62,7 @@ export function AuthProvider({ children }) {
    */
   const fetchDemoUsers = async () => {
     try {
-      const res = await fetch('/api/auth/demo-users');
+      const res = await fetch(`${API_BASE}/api/auth/demo-users`);
       const data = await res.json();
       if (data.success) {
         setDemoUsers(data.users);
@@ -86,7 +87,7 @@ export function AuthProvider({ children }) {
     }
 
     try {
-      const res = await fetch('/api/auth/me', {
+      const res = await fetch(`${API_BASE}/api/auth/me`, {
         headers: { Authorization: `Bearer ${activeToken}` }
       });
       const data = await res.json();
@@ -116,7 +117,7 @@ export function AuthProvider({ children }) {
    * @returns {Promise<{success: boolean, message?: string}>} Authentication result.
    */
   const login = async (email, password) => {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -140,7 +141,7 @@ export function AuthProvider({ children }) {
    * @returns {Promise<{success: boolean, message?: string}>} Registration result.
    */
   const register = async (userData) => {
-    const res = await fetch('/api/auth/register', {
+    const res = await fetch(`${API_BASE}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData)
